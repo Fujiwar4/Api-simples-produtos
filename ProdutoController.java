@@ -12,12 +12,11 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ProdutoController {
 
     private final List<Produto> produtos = new ArrayList<>();
-    private final AtomicLong idCounter = new AtomicLong(1); // Para geração de IDs únicos
+    private final AtomicLong idCounter = new AtomicLong(1);
 
-    // Criar um produto (POST /produtos)
     @PostMapping
     public Produto criarProduto(@RequestBody Produto produto) {
-        produto.setId(idCounter.getAndIncrement()); // Gera um ID único
+        produto.setId(idCounter.getAndIncrement());
         produtos.add(produto);
         return produto;
     }
@@ -28,7 +27,6 @@ public class ProdutoController {
         return produtos;
     }
 
-    // Buscar um produto pelo ID (GET /produtos/{id})
     @GetMapping("/{id}")
     public Produto buscarProduto(@PathVariable Long id) {
         return produtos.stream()
@@ -37,7 +35,6 @@ public class ProdutoController {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado."));
     }
 
-    // Atualizar um produto pelo ID (PUT /produtos/{id})
     @PutMapping("/{id}")
     public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
         Produto produtoExistente = produtos.stream()
@@ -45,14 +42,12 @@ public class ProdutoController {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado."));
 
-        // Atualiza os campos do produto existente
         produtoExistente.setNome(produtoAtualizado.getNome());
         produtoExistente.setPreco(produtoAtualizado.getPreco());
         produtoExistente.setQuantidade(produtoAtualizado.getQuantidade());
         return produtoExistente;
     }
 
-    // Deletar um produto pelo ID (DELETE /produtos/{id})
     @DeleteMapping("/{id}")
     public void deletarProduto(@PathVariable Long id) {
         Produto produtoExistente = produtos.stream()
