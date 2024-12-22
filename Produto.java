@@ -1,12 +1,20 @@
-package com.exemplo.produtos;
+package com.example.produtos;
 
 public class Produto {
     private Long id;
     private String nome;
     private Double preco;
     private Integer quantidade;
+    
+    public Produto() {}
 
-    // Getters e Setters
+    public Produto(Long id, String nome, Double preco, Integer quantidade) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
     public Long getId() {
         return id;
     }
